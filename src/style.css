@@ -1,0 +1,36 @@
+body{
+    display: flex;
+    flex-direction: row;
+}
+
+.MainScreen{
+    height: 500px;
+    width: 500px; 
+    background-color: black; 
+    display: grid;
+    grid-template-columns: repeat(3, 6em);
+    grid-template-rows: repeat(3, 6em);
+    align-content: center;
+    justify-content: center;
+    gap: 3em;
+}
+
+.Stats{
+    background-color: grey;
+    height: 500px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.Bottom,.Top{
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.Cell{
+   
+    background-color: white;
+}
