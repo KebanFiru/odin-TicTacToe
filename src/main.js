@@ -86,11 +86,10 @@ const Game = (() => {
         }
     }
 
-    
-
     GameBoard.render();
 
     return{start, players, ifWins, isWinReturn, isWin}; 
+    
 })();
 
 function winCondutions(){
