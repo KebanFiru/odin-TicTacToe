@@ -1,21 +1,37 @@
 const GameBoard = (() =>{
     let gameboard = ["","","","","","","","",""];
+    let LineCount = 0;
 
-    const cells = document.querySelectorAll(".Cell");
+    const cells = document.getElementsByClassName("Cell");
+    const CellArray = Array.from(cells)
 
     const render = ()=>{
         gameboard.forEach((element, index)=>{
             switch (element){
                 case "X":
-                    cells[index].textContent = "X";
+                    CellArray[index].textContent = "X";
                     break;
                 case "O":
-                    cells[index].textContent = "O";
+                    CellArray[index].textContent = "O";
                     break;
                 default:
-                    cells[index].textContent = '';
+                    CellArray[index].textContent = '';
                     break;
             }
+            CellArray.forEach((element, index)=>{
+                element.addEventListener("click", ()=>{
+                    switch(LineCount){
+                        case 0:
+                            CellArray[index].textContent = Game.players(LineCount).symbol;
+                            LineCount = 1;
+                            break;
+                        case 1:
+                            CellArray[index].textContent = Game.players(LineCount).symbol;
+                            LineCount = 0;
+                            break;
+                    }
+                })
+            })
         });
     }
 
@@ -27,15 +43,25 @@ const CreatePlayer = (name, symbol) =>{
 }
 
 const Game = (() => {
-    const start = ()=>{
+    let Players = []
 
-        CreatePlayer(document.querySelector(".playerone").textContent, "X");
-        CreatePlayer(document.querySelector(".playertwo").textContent, "O");
+    const start = ()=>{
+        Players = [CreatePlayer(document.querySelector("#PlayerOne").value, "X"),
+                   CreatePlayer(document.querySelector("#PlayerTwo").value, "O")
+        ]
 
     }
+    const players = (index) => {
 
+        return Players[index];
+    };
+
+    GameBoard.render();
+
+    return{start, players}; 
 })();
 
 const StartButton = document.querySelector(".StartGame");
 StartButton.addEventListener("click", () => {
+    Game.start();
 });
