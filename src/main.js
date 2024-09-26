@@ -42,6 +42,7 @@ const GameBoard = (() =>{
     RestartButton.addEventListener("click", ()=>{
         isWin = false;
         for(let i=0;i<9;i++){
+            LineCount = 0;
             gameboard[i] = ''
             CellArray[i].textContent = ''
             WinnerLabel.textContent = ''
@@ -89,7 +90,7 @@ const Game = (() => {
     GameBoard.render();
 
     return{start, players, ifWins, isWinReturn, isWin}; 
-    
+
 })();
 
 function winCondutions(){
