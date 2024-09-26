@@ -16,20 +16,23 @@ const GameBoard = (() =>{
                 element.addEventListener("click", ()=>{
                     if(Game.players(LineCount)){
                         if(gameboard[index] == ''){
-                            switch(LineCount){
-                                case 0:
-                                    CellArray[index].textContent = Game.players(LineCount).symbol;
-                                    gameboard[index] = Game.players(LineCount).symbol;
-                                    Game.ifWins();
-                                    LineCount = 1;
-                                    break;
-                                case 1:
-                                    CellArray[index].textContent = Game.players(LineCount).symbol;
-                                    gameboard[index] = Game.players(LineCount).symbol;
-                                    Game.ifWins();
-                                    LineCount = 0;
-                                    break;
+                            if(Game.isWinReturn === false){
+                                switch(LineCount){
+                                    case 0:
+                                        CellArray[index].textContent = Game.players(LineCount).symbol;
+                                        gameboard[index] = Game.players(LineCount).symbol;
+                                        Game.ifWins();
+                                        LineCount = 1;
+                                        break;
+                                    case 1:
+                                        CellArray[index].textContent = Game.players(LineCount).symbol;
+                                        gameboard[index] = Game.players(LineCount).symbol;
+                                        Game.ifWins();
+                                        LineCount = 0;
+                                        break;
+                                }
                             }
+                            
                         }
                     }       
                 })
@@ -46,10 +49,14 @@ const CreatePlayer = (name, symbol) =>{
 }
 
 const Game = (() => {
+    let isWin = false;
     let Players = []
 
-    const players = (index) => {
+    const isWinReturn = ()=>{
+        return isWin;
+    }
 
+    const players = (index) => {
         return Players[index]
     }
 
@@ -62,16 +69,18 @@ const Game = (() => {
         if(winCondutions()){
             if(winCondutions() == "X"){
                 WinnerLabel.textContent = "Player One won"
+                isWin = true;
             }
             else{
                 WinnerLabel.textContent = "Player Two won"
+                isWin = true;
             }
         }
     }
 
     GameBoard.render();
 
-    return{start, players, ifWins}; 
+    return{start, players, ifWins, isWinReturn}; 
 })();
 
 function winCondutions(){
