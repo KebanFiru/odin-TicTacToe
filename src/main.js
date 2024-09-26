@@ -1,3 +1,5 @@
+const WinnerLabel = document.querySelector(".Winner");
+
 const GameBoard = (() =>{
     let gameboard = ["","","","","","","","",""];
     let LineCount = 0;
@@ -10,42 +12,28 @@ const GameBoard = (() =>{
     }
 
     const render = ()=>{
-        gameboard.forEach((element, index)=>{
-            switch (element){
-                case "X":
-                    CellArray[index].textContent = "X";
-                    break;
-                case "O":
-                    CellArray[index].textContent = "O";
-                    break;
-                default:
-                    CellArray[index].textContent = '';
-                    break;
-            }
             CellArray.forEach((element, index)=>{
                 element.addEventListener("click", ()=>{
-                    if(gameboard[index] == ''){
-                        switch(LineCount){
-                            case 0:
-                                CellArray[index].textContent = Game.players(LineCount).symbol;
-                                gameboard[index] = Game.players(LineCount).symbol;
-                                LineCount = 1;
-                                winCondutions();
-                                break;
-                            case 1:
-                                CellArray[index].textContent = Game.players(LineCount).symbol;
-                                gameboard[index] = Game.players(LineCount).symbol;
-                                LineCount = 0;
-                                winCondutions();
-
-                                break;
-                      
+                    if(Game.players(LineCount)){
+                        if(gameboard[index] == ''){
+                            switch(LineCount){
+                                case 0:
+                                    CellArray[index].textContent = Game.players(LineCount).symbol;
+                                    gameboard[index] = Game.players(LineCount).symbol;
+                                    Game.ifWins();
+                                    LineCount = 1;
+                                    break;
+                                case 1:
+                                    CellArray[index].textContent = Game.players(LineCount).symbol;
+                                    gameboard[index] = Game.players(LineCount).symbol;
+                                    Game.ifWins();
+                                    LineCount = 0;
+                                    break;
+                            }
                         }
-                    }
-                    
+                    }       
                 })
             })
-        });
     }
     
     
@@ -70,11 +58,20 @@ const Game = (() => {
                    CreatePlayer(document.querySelector("#PlayerTwo").value, "O") 
         ]
     }
+    const ifWins = ()=>{
+        if(winCondutions()){
+            if(winCondutions() == "X"){
+                WinnerLabel.textContent = "Player One won"
+            }
+            else{
+                WinnerLabel.textContent = "Player Two won"
+            }
+        }
+    }
 
     GameBoard.render();
 
-
-    return{start, players}; 
+    return{start, players, ifWins}; 
 })();
 
 function winCondutions(){
@@ -91,7 +88,7 @@ function winCondutions(){
         for(let i=0; i< condutions.length; i++){
             const [a,b,c] = condutions[i];
             if(GameBoard.gameBoard(a) && GameBoard.gameBoard(a) === GameBoard.gameBoard(b)&& GameBoard.gameBoard(a) === GameBoard.gameBoard(c)){
-                return true;
+                return GameBoard.gameBoard(a);
             }
         }
         return false;
