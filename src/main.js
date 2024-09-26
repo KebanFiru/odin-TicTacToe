@@ -1,11 +1,39 @@
-const GameBoard = (()=>{
-    const board = [["","",""],["","",""],["","",""]];
-    return {board};
+const GameBoard = (() =>{
+    let gameboard = ["","","","","","","","",""];
+
+    const cells = document.querySelectorAll(".Cell");
+
+    const render = ()=>{
+        gameboard.forEach((element, index)=>{
+            switch (element){
+                case "X":
+                    cells[index].textContent = "X";
+                    break;
+                case "O":
+                    cells[index].textContent = "O";
+                    break;
+                default:
+                    cells[index].textContent = '';
+                    break;
+            }
+        });
+    }
+
+    return {render};
 })();
 
-const CreatePlayer = (name,type) => {
-    return {name, type};
+const CreatePlayer = (name, symbol) =>{
+    return {name,symbol };
 }
 
-const playerOne = CreatePlayer('Player 1', "X")
-const playerTwo = CreatePlayer('Player 2', "O")
+const Game = (() => {
+    const start = ()=>{
+        CreatePlayer(document.querySelector(".playerone", "X"));
+        CreatePlayer(document.querySelector(".playertwo", "O"));
+    }
+
+})();
+
+const StartButton = document.querySelector(".StartGame");
+StartButton.addEventListener("click", () => {
+});
