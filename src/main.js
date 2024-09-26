@@ -16,30 +16,38 @@ const GameBoard = (() =>{
                 element.addEventListener("click", ()=>{
                     if(Game.players(LineCount)){
                         if(gameboard[index] == ''){
-                            if(Game.isWinReturn === false){
+                            if(Game.isWinReturn() == false){
                                 switch(LineCount){
                                     case 0:
-                                        CellArray[index].textContent = Game.players(LineCount).symbol;
                                         gameboard[index] = Game.players(LineCount).symbol;
+                                        CellArray[index].textContent = gameboard[index];
                                         Game.ifWins();
                                         LineCount = 1;
                                         break;
                                     case 1:
-                                        CellArray[index].textContent = Game.players(LineCount).symbol;
                                         gameboard[index] = Game.players(LineCount).symbol;
+                                        CellArray[index].textContent = gameboard[index];
                                         Game.ifWins();
                                         LineCount = 0;
                                         break;
                                 }
-                            }
-                            
+                            }    
                         }
                     }       
                 })
             })
     }
     
-    
+    const RestartButton = document.querySelector(".RestartGame")
+    RestartButton.addEventListener("click", ()=>{
+        isWin = false;
+        for(let i=0;i<9;i++){
+            gameboard[i] = ''
+            CellArray[i].textContent = ''
+            WinnerLabel.textContent = ''
+        }
+
+    })
 
     return {render, gameBoard};
 })();
@@ -78,9 +86,11 @@ const Game = (() => {
         }
     }
 
+    
+
     GameBoard.render();
 
-    return{start, players, ifWins, isWinReturn}; 
+    return{start, players, ifWins, isWinReturn, isWin}; 
 })();
 
 function winCondutions(){
@@ -107,3 +117,5 @@ const StartButton = document.querySelector(".StartGame");
 StartButton.addEventListener("click", () => {
     Game.start();
 });
+
+
