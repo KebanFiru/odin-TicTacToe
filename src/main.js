@@ -30,11 +30,14 @@ const GameBoard = (() =>{
                                 CellArray[index].textContent = Game.players(LineCount).symbol;
                                 gameboard[index] = Game.players(LineCount).symbol;
                                 LineCount = 1;
+                                winCondutions();
                                 break;
                             case 1:
                                 CellArray[index].textContent = Game.players(LineCount).symbol;
                                 gameboard[index] = Game.players(LineCount).symbol;
                                 LineCount = 0;
+                                winCondutions();
+
                                 break;
                       
                         }
@@ -64,36 +67,34 @@ const Game = (() => {
 
     const start = ()=>{
         Players = [CreatePlayer(document.querySelector("#PlayerOne").value, "X"),
-                   CreatePlayer(document.querySelector("#PlayerTwo").value, "O")
+                   CreatePlayer(document.querySelector("#PlayerTwo").value, "O") 
         ]
-
     }
-    
 
     GameBoard.render();
+
 
     return{start, players}; 
 })();
 
 function winCondutions(){
     const condutions = [
-        [0,1,2],
         [0,3,6],
+        [0,1,2],
         [1,4,7],
-        [2,5,8],
-        [0,4,8],
         [2,4,6],
+        [0,4,8],
+        [2,5,8],
         [3,4,5],
-        [6,7,8]]
+        [6,7,8]
+    ]
         for(let i=0; i< condutions.length; i++){
             const [a,b,c] = condutions[i];
-            if(GameBoard.gameBoard(a) && GameBoard.gameBoard(a) == GameBoard.gameBoard(b)&& GameBoard.gameBoard(a) == GameBoard.gameBoard(c)){
+            if(GameBoard.gameBoard(a) && GameBoard.gameBoard(a) === GameBoard.gameBoard(b)&& GameBoard.gameBoard(a) === GameBoard.gameBoard(c)){
                 return true;
             }
-            else{
-                return false;
-            }
         }
+        return false;
 }
 
 const StartButton = document.querySelector(".StartGame");
