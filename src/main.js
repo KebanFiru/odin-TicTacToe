@@ -28,8 +28,10 @@ const CreatePlayer = (name, symbol) =>{
 
 const Game = (() => {
     const start = ()=>{
-        CreatePlayer(document.querySelector(".playerone", "X"));
-        CreatePlayer(document.querySelector(".playertwo", "O"));
+
+        CreatePlayer(document.querySelector(".playerone").textContent, "X");
+        CreatePlayer(document.querySelector(".playertwo").textContent, "O");
+
     }
 
 })();
